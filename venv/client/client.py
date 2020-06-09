@@ -24,7 +24,6 @@ class google_client(object):
     def sheet_formatter(self,sheetname):
         working_sheet = self.sh.worksheet(sheetname)
         sheetId = working_sheet.id
-        print('sheetId is ',sheetId)
         body = {
             "requests": [
             {
@@ -39,7 +38,7 @@ class google_client(object):
             }
             ]
         }
-        working_sheet.batch_update({"requests": body})  # auto resize all columns
+        self.sh.batch_update(body)
         header_fmt = f.CellFormat(
         backgroundColor=f.Color(0.043137256,0.3254902,0.5803922),
         textFormat=f.TextFormat(bold=True, foregroundColor=f.Color(1,1,1)),
@@ -53,5 +52,4 @@ class google_client(object):
 name = 'test'
 working_file = google_client('batchupdate')
 sheet = working_file.open_tab(name)
-print(sheet.cell(2,2).value)
 working_file.sheet_formatter(name)
